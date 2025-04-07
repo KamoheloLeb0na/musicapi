@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI API UI</title>
+    <script>
+        async function search() {
+            const query = document.getElementById("searchQuery").value;
+            const response = await fetch("http://localhost:3000/search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ query })
+            });
+            const results = await response.json();
+            document.getElementById("searchResults").innerHTML = JSON.stringify(results, null, 2);
+        }
+
+        async function choosy() {
+            const link = document.getElementById("choosyLink").value;
+            const response = await fetch("http://localhost:3000/choosy", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ link })
+            });
+            const results = await response.json();
+            document.getElementById("choosyResults").innerHTML = JSON.stringify(results, null, 2);
+        }
+
+        async function download() {
+            const link = document.getElementById("downloadLink").value;
+            const response = await fetch("http://localhost:3000/download", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ link })
+            });
+            const result = await response.json();
+            document.getElementById("downloadResult").innerHTML = JSON.stringify(result, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h1>AI API Interface</h1>
+
+    <section>
+        <h2>Search</h2>
+        <input type="text" id="searchQuery" placeholder="Enter query">
+        <button onclick="search()">Search</button>
+        <pre id="searchResults"></pre>
+    </section>
+
+    <section>
+        <h2>Choosy</h2>
+        <input type="text" id="choosyLink" placeholder="Enter link">
+        <button onclick="choosy()">Fetch Details</button>
+        <pre id="choosyResults"></pre>
+    </section>
+
+    <section>
+        <h2>Download</h2>
+        <input type="text" id="downloadLink" placeholder="Enter link">
+        <button onclick="download()">Get Download Link</button>
+        <pre id="downloadResult"></pre>
+    </section>
+</body>
+</html>
